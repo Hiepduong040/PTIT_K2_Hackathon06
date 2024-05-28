@@ -25,6 +25,8 @@ class Product {
   }
 }
 
+
+
 type HandleAddToCartType = (product: Product, quantity: number, index: number) => void;
 
 export default function ListProduct({ handleAddToCart }: { handleAddToCart: HandleAddToCartType }) {
@@ -32,40 +34,41 @@ export default function ListProduct({ handleAddToCart }: { handleAddToCart: Hand
 
   useEffect(() => {
     const storedProducts = localStorage.getItem("products");
+    
     if (storedProducts) {
       setProducts(JSON.parse(storedProducts));
     } else {
-    //   setProducts([
-    //     new Product(
-    //       'Pizza',
-    //       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
-    //       'images/pizza.jpg',
-    //       30,
-    //       0
-    //     ),
-    //     new Product(
-    //       'Hamburger',
-    //       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
-    //       './images/Hamburger.jpg',
-    //       15,
-    //       4
-    //     ),
-    //     new Product(
-    //       'Bread',
-    //       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
-    //       'images/bread.jpg',
-    //       20,
-    //       1
-    //     ),
-    //     new Product(
-    //       'Cake',
-    //       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
-    //       './images/Cake.jpg',
-    //       10,
-    //       1
-    //     ),
-    //   ]);
-    // 
+      setProducts([
+        // new Product(
+        //   'Pizza',
+        //   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
+        //   'images/pizza.jpg',
+        //   30,
+        //   0
+        // ),
+        // new Product(
+        //   'Hamburger',
+        //   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
+        //   './images/Hamburger.jpg',
+        //   15,
+        //   4
+        // ),
+        // new Product(
+        //   'Bread',
+        //   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
+        //   'images/bread.jpg',
+        //   20,
+        //   1
+        // ),
+        // new Product(
+        //   'Cake',
+        //   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dicta asperiores veniam repellat unde debitis quisquam magnam magni ut deleniti!',
+        //   './images/Cake.jpg',
+        //   10,
+        //   1
+        // ),
+      ]);
+    
   }
   }, []);
 
