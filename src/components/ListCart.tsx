@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert";
 
@@ -12,28 +13,84 @@ class MyCart {
     this.quantity = quantity;
   }
 }
+class Product {
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  quantity: number;
+  isDisabled: boolean;
+
+  constructor(
+    name: string,
+    description: string,
+    image: string,
+    price: number,
+    quantity: number
+  ) {
+    this.name = name;
+    this.description = description;
+    this.image = image;
+    this.price = price;
+    this.quantity = quantity;
+    this.isDisabled = quantity === 0;
+  }
+}
 
 export default function ListCart() {
-  const [myCarts, setMyCarts] = useState<MyCart[]>([
-    new MyCart("Cake", 10, 15),
-    new MyCart("Hamburger", 15, 32),
-  ]);
+  const [myCarts, setMyCarts] = useState<MyCart[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    const storedCarts = localStorage.getItem("myCarts");
+    if (storedCarts) {
+      setMyCarts(JSON.parse(storedCarts));
+    }
+  }, []);
+
+  // const handleAddToCart = (product: Product, quantity: number, index: number) => {
+  //   const updatedCarts = [...myCarts];
+  //   updatedCarts.push(new MyCart(product.name, product.price, quantity));
+  //   setMyCarts(updatedCarts);
+  //   Swal("Add to cart successfully", "", "success");
+  // };
 
   useEffect(() => {
     localStorage.setItem("myCarts", JSON.stringify(myCarts));
   }, [myCarts]);
 
+  const updateLocalStorage = (updatedCarts: MyCart[]) => {
+    setMyCarts(updatedCarts);
+    localStorage.setItem("myCarts", JSON.stringify(updatedCarts));
+  };
+
+
   const handleDeleteItem = (index: number) => {
     const updatedCarts = [...myCarts];
     updatedCarts.splice(index, 1);
+    console.log(updatedCarts);
+    
     setMyCarts(updatedCarts);
+    updateLocalStorage(updatedCarts);
+    console.log(myCarts);
+    
     Swal("Delete successfully", "", "success");
+    
   };
+
+  
+
+  // const handleQuantityChange = (index: number, newQuantity: number) => {
+  //   const updatedProducts = [...products];
+  //   updatedProducts[index].quantity = newQuantity;
+  //   updatedProducts[index].isDisabled = newQuantity === 0;
+  //   setProducts(updatedProducts);
+  //   localStorage.setItem("products", JSON.stringify(updatedProducts));
+  // };
 
   const handleUpdateQuantity = (index: number, quantity: number) => {
     const updatedCarts = [...myCarts];
     updatedCarts[index].quantity = quantity;
-    setMyCarts(updatedCarts);
+    updateLocalStorage(updatedCarts);
   };
 
   const handleUpdateButtonClick = (index: number, quantity: number) => {
